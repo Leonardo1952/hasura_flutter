@@ -5,8 +5,12 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Slidy',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      title: 'Flutter Hasura',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: const Color(0xff797ec2),
+        accentColor: const Color(0xff72afdd),
+      ),
     ).modular();
   }
 }
