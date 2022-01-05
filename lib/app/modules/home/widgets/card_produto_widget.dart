@@ -2,9 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CardProdutoWidget extends StatelessWidget {
-  final String title;
-  const CardProdutoWidget({Key? key, this.title = "CardProdutoWidget"})
-      : super(key: key);
+  final String nomeProduto;
+  final String categoriaProduto;
+  final String tipoProduto;
+  final String valor;
+
+  const CardProdutoWidget({
+    Key? key,
+    required this.nomeProduto,
+    required this.categoriaProduto,
+    required this.tipoProduto,
+    required this.valor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,36 +50,36 @@ class CardProdutoWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Bolsa Gutty",
-              style: TextStyle(
+            Text(
+              nomeProduto,
+              style: const TextStyle(
                   color: Colors.black,
                   fontSize: 30,
                   fontWeight: FontWeight.w500),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            const Text(
-              "Bolsa Femininas",
-              style: TextStyle(
+            Text(
+              categoriaProduto,
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 18,
               ),
             ),
             Row(
-              children: const [
+              children: [
                 Expanded(
                     child: Text(
-                  "Camisetas",
-                  style: TextStyle(
+                  tipoProduto,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 18,
                   ),
                 )),
                 Text(
-                  "R\$ 20,00",
-                  style: TextStyle(
+                  valor,
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 30,
                       fontWeight: FontWeight.w500),
