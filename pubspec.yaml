@@ -38,6 +38,8 @@ dependencies:
   mobx: ^2.0.6+1
   flutter_mobx: ^2.0.3+2
   hasura_connect: ^4.0.0+2
+  find_dropdown: ^1.0.0
+  #flutter_modular_test: ^1.0.4
 
 dev_dependencies:
   flutter_test:

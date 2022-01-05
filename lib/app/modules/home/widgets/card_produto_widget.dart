@@ -78,11 +78,11 @@ class CardProdutoWidget extends StatelessWidget {
                   ),
                 )),
                 Text(
-                  valor,
+                  "R\$ ${double.parse(valor).toStringAsFixed(2).replaceAll('.', ',')}", //Deixar o valor com duas casas descimais e trocar o ponto pela virgula
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 30,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.bold),
                 ),
               ],
             ),
