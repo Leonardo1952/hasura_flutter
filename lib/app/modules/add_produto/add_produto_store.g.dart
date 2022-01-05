@@ -24,24 +24,26 @@ mixin _$AddProdutoStore on _AddProdutoStoreBase, Store {
     });
   }
 
-  final _$_AddProdutoStoreBaseActionController =
-      ActionController(name: '_AddProdutoStoreBase');
+  final _$tipoProdutoAtom = Atom(name: '_AddProdutoStoreBase.tipoProduto');
 
   @override
-  void increment() {
-    final _$actionInfo = _$_AddProdutoStoreBaseActionController.startAction(
-        name: '_AddProdutoStoreBase.increment');
-    try {
-      return super.increment();
-    } finally {
-      _$_AddProdutoStoreBaseActionController.endAction(_$actionInfo);
-    }
+  TipoCategoriaProdutoDto get tipoProduto {
+    _$tipoProdutoAtom.reportRead();
+    return super.tipoProduto;
+  }
+
+  @override
+  set tipoProduto(TipoCategoriaProdutoDto value) {
+    _$tipoProdutoAtom.reportWrite(value, super.tipoProduto, () {
+      super.tipoProduto = value;
+    });
   }
 
   @override
   String toString() {
     return '''
-value: ${value}
+value: ${value},
+tipoProduto: ${tipoProduto}
     ''';
   }
 }

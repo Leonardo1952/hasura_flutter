@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CustomComboboxWidget extends StatelessWidget {
   final List<Model> items;
   final Function(Model) onChange;
-  final Model itemSelecionado;
+  final Model? itemSelecionado;
   const CustomComboboxWidget({
     Key? key,
     required this.items,
@@ -28,9 +28,9 @@ class CustomComboboxWidget extends StatelessWidget {
       dropdownBuilder: (_, model) {
         return Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(3),
-              border: Border.all(width: 2),
-              color: Theme.of(context).primaryColor),
+            borderRadius: BorderRadius.circular(3),
+            border: Border.all(width: 2),
+          ),
           child: model == null
               ? ListTile(
                   title: Text(

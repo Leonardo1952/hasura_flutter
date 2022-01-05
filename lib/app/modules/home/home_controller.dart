@@ -1,6 +1,4 @@
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:hasura_flutter/app/modules/home/home_module.dart';
-import 'package:hasura_flutter/app/modules/home/models/produto_model.dart';
+import 'package:hasura_flutter/app/modules/home/models/add_produto/produto_model.dart';
 import 'package:mobx/mobx.dart';
 
 import 'package:hasura_flutter/app/modules/home/repositories/home_repository.dart';

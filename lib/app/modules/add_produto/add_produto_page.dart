@@ -1,5 +1,6 @@
 import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hasura_flutter/app/shared/widgets/custom_combobox/custom_combobox_widget.dart';
 import 'package:hasura_flutter/app/shared/widgets/label_widget.dart';
@@ -14,9 +15,8 @@ class AddProdutoPage extends StatefulWidget {
   AddProdutoPageState createState() => AddProdutoPageState();
 }
 
-class AddProdutoPageState extends State<AddProdutoPage> {
-  final AddProdutoStore store = Modular.get();
-
+class AddProdutoPageState
+    extends ModularState<AddProdutoPage, AddProdutoStore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,31 +96,69 @@ class AddProdutoPageState extends State<AddProdutoPage> {
                   ),
                   const SizedBox(height: 20),
                   const LabelWidget(title: "Categoria do Produto:"),
-                  CustomComboboxWidget(
-                    items: [
-                      Model(id: "01", descricao: 'Brasil'),
-                      Model(id: "01", descricao: "Itália"),
-                      Model(id: "01", descricao: "Estados Unidos"),
-                      Model(id: "01", descricao: "Canadá")
-                    ],
-                    onChange: (item) {
-                      print(item.descricao);
+                  Observer(
+                    builder: (BuildContext context) {
+                      if (controller.tipoProduto == null) {
+                        return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3),
+                                border: Border.all(
+                                    width: 2,
+                                    color: Theme.of(context).primaryColor)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ],
+                            ));
+                      }
+                      return CustomComboboxWidget(
+                        items: store.tipoProduto.categoriaProduto
+                            .map((data) =>
+                                Model(id: data.id, descricao: data.descricao))
+                            .toList(),
+                        onChange: (item) {
+                          print(item.descricao);
+                        },
+                        itemSelecionado: null,
+                      );
                     },
-                    itemSelecionado: Model(id: "01", descricao: "Brasil"),
                   ),
                   const LabelWidget(title: "Tipo Produto:"),
                   const SizedBox(height: 20),
-                  CustomComboboxWidget(
-                    items: [
-                      Model(id: "01", descricao: 'Brasil'),
-                      Model(id: "01", descricao: "Itália"),
-                      Model(id: "01", descricao: "Estados Unidos"),
-                      Model(id: "01", descricao: "Canadá")
-                    ],
-                    onChange: (item) {
-                      print(item.descricao);
+                  Observer(
+                    builder: (BuildContext context) {
+                      if (controller.tipoProduto == null) {
+                        return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3),
+                                border: Border.all(
+                                    width: 2,
+                                    color: Theme.of(context).primaryColor)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ],
+                            ));
+                      }
+                      return CustomComboboxWidget(
+                        items: store.tipoProduto.tipoProduto
+                            .map((data) =>
+                                Model(id: data.id, descricao: data.descricao))
+                            .toList(),
+                        onChange: (item) {
+                          print(item.descricao);
+                        },
+                        itemSelecionado: null,
+                      );
                     },
-                    itemSelecionado: Model(id: "01", descricao: "Brasil"),
                   ),
                   const SizedBox(height: 20),
                   Container(

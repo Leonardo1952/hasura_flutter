@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'home_controller.dart';
-import 'home_module.dart';
 import 'widgets/card_produto_widget.dart';
 
 class HomePage extends StatefulWidget {

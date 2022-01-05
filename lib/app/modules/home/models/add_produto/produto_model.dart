@@ -2,8 +2,8 @@ class ProdutoModel {
   final String id;
   final String nome;
   final int valor;
-  final AtributoGenerico tipoProduto;
-  final AtributoGenerico categoriaProduto;
+  final TipoOuCategoriaDto tipoProduto;
+  final TipoOuCategoriaDto categoriaProduto;
 
   ProdutoModel({
     required this.id,
@@ -17,8 +17,9 @@ class ProdutoModel {
         id: json["id"],
         nome: json["nome"],
         valor: json["valor"],
-        tipoProduto: AtributoGenerico.fromJson(json["tipo_produto"]),
-        categoriaProduto: AtributoGenerico.fromJson(json["categoria_produto"]),
+        tipoProduto: TipoOuCategoriaDto.fromJson(json["tipo_produto"]),
+        categoriaProduto:
+            TipoOuCategoriaDto.fromJson(json["categoria_produto"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,22 +30,25 @@ class ProdutoModel {
         "categoria_produto": categoriaProduto.toJson(),
       };
 
+  //Este foi escrito separado
   static List<ProdutoModel> fromJsonList(List list) {
     return list
         .map<ProdutoModel>((item) => ProdutoModel.fromJson(item))
         .toList();
+
+    ///
   }
 }
 
-class AtributoGenerico {
-  AtributoGenerico({
+class TipoOuCategoriaDto {
+  TipoOuCategoriaDto({
     required this.descricao,
   });
 
   String descricao;
 
-  factory AtributoGenerico.fromJson(Map<String, dynamic> json) =>
-      AtributoGenerico(
+  factory TipoOuCategoriaDto.fromJson(Map<String, dynamic> json) =>
+      TipoOuCategoriaDto(
         descricao: json["descricao"],
       );
 
