@@ -27,8 +27,26 @@ class AddProdutoRepository extends Disposable {
     return TipoCategoriaProdutoDto.fromJson(snapshot["data"]);
   }
 
-  @override
-  void dispose() {
-    //
+  //Adicionar Produto ao banco
+  Future<bool> addProduto(String descricao, String valor, String selectedTipo,
+      String selectedCategoria) async {
+    var mutation = ''' 
+           mutation addProduto(\$nome: String, \$categoria: uuid, \$tipo: uuid, \$valor: float8) {
+            insert_produto(objects: {nome: \$nome, categoria_produto_id: \$categoria, tipo_produto_id: \$tipo, valor: \$valor}) {
+              affected_rows
+            }
+          }
+      ''';
+
+    var snapshot = await _hasuraConnect.mutation(mutation, variables: {
+      "nome": descricao,
+      "categoria": selectedCategoria,
+      "tipo": selectedTipo,
+      "valor": valor
+    });
+    return snapshot["data"]["insert_produto"]["affected_rows"] > 0;
   }
+
+  @override
+  void dispose() {}
 }

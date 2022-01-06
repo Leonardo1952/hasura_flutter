@@ -1,7 +1,7 @@
-import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hasura_flutter/app/modules/add_produto/models/tipo_categoria_produto_dto.dart';
 import 'package:hasura_flutter/app/shared/widgets/custom_combobox/custom_combobox_widget.dart';
 import 'package:hasura_flutter/app/shared/widgets/label_widget.dart';
 
@@ -58,6 +58,7 @@ class AddProdutoPageState
                 children: <Widget>[
                   const LabelWidget(title: "Descrição"),
                   TextField(
+                    onChanged: store.setDescricao,
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18),
                     decoration: InputDecoration(
@@ -77,6 +78,7 @@ class AddProdutoPageState
                   const SizedBox(height: 20),
                   const LabelWidget(title: "Valor:"),
                   TextField(
+                    onChanged: store.setValor,
                     keyboardType: TextInputType.number,
                     style: TextStyle(
                         color: Theme.of(context).primaryColor, fontSize: 18),
@@ -98,7 +100,7 @@ class AddProdutoPageState
                   const LabelWidget(title: "Categoria do Produto:"),
                   Observer(
                     builder: (BuildContext context) {
-                      if (controller.tipoProduto == null) {
+                      if (store.tipoProduto == null) {
                         return Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(3),
@@ -120,9 +122,9 @@ class AddProdutoPageState
                             .map((data) =>
                                 Model(id: data.id, descricao: data.descricao))
                             .toList(),
-                        onChange: (item) {
-                          print(item.descricao);
-                        },
+                        onChange: (tipo) => store.setSelectedCategoria(
+                            TipoECategoriaDto(
+                                id: tipo.id, descricao: tipo.descricao)),
                         itemSelecionado: null,
                       );
                     },
@@ -131,7 +133,7 @@ class AddProdutoPageState
                   const SizedBox(height: 20),
                   Observer(
                     builder: (BuildContext context) {
-                      if (controller.tipoProduto == null) {
+                      if (store.tipoProduto == null) {
                         return Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(3),
@@ -153,9 +155,9 @@ class AddProdutoPageState
                             .map((data) =>
                                 Model(id: data.id, descricao: data.descricao))
                             .toList(),
-                        onChange: (item) {
-                          print(item.descricao);
-                        },
+                        onChange: (tipo) => store.setSelectedTipo(
+                            TipoECategoriaDto(
+                                id: tipo.id, descricao: tipo.descricao)),
                         itemSelecionado: null,
                       );
                     },
@@ -167,7 +169,15 @@ class AddProdutoPageState
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
                               Theme.of(context).primaryColor)),
-                      onPressed: () {},
+                      onPressed: () async {
+                        var result = await store.salvar();
+
+                        if (result) {
+                          Navigator.of(context).pop();
+                        } else {
+                          print("deu merda");
+                        }
+                      },
                       child: const Text(
                         "Salvar",
                         style: TextStyle(

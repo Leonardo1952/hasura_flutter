@@ -1,5 +1,6 @@
 import 'package:find_dropdown/find_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:hasura_flutter/app/modules/add_produto/models/tipo_categoria_produto_dto.dart';
 
 class CustomComboboxWidget extends StatelessWidget {
   final List<Model> items;

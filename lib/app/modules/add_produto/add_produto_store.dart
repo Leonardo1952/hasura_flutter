@@ -1,6 +1,5 @@
 import 'package:hasura_flutter/app/modules/add_produto/models/tipo_categoria_produto_dto.dart';
 import 'package:hasura_flutter/app/modules/add_produto/repositories/add_produto_repository.dart';
-import 'package:hasura_flutter/app/modules/home/models/add_produto/produto_model.dart';
 import 'package:mobx/mobx.dart';
 
 part 'add_produto_store.g.dart';
@@ -9,13 +8,45 @@ class AddProdutoStore = _AddProdutoStoreBase with _$AddProdutoStore;
 
 abstract class _AddProdutoStoreBase with Store {
   final AddProdutoRepository addProdutoRepository;
-  @observable
-  int value = 0;
 
   _AddProdutoStoreBase(this.addProdutoRepository) {
     addProdutoRepository.getTipoCategoriaProduto().then((value) {
       tipoProduto = value;
     });
+  }
+
+  @observable
+  String descricao = "";
+
+  @action
+  setDescricao(String _desc) {
+    descricao = _desc;
+  }
+
+  @observable
+  String valor = "";
+
+  @action
+  setValor(String _valor) {
+    valor = _valor;
+  }
+
+  @observable
+  TipoECategoriaDto selectedCategoria =
+      TipoECategoriaDto.fromJson({"id": "", "descricao": ""});
+
+  @action
+  setSelectedCategoria(TipoECategoriaDto _selectedCategoria) {
+    selectedCategoria = _selectedCategoria;
+  }
+
+  @observable
+  TipoECategoriaDto selectedTipo =
+      TipoECategoriaDto.fromJson({"id": "", "descricao": ""});
+
+  @action
+  setSelectedTipo(TipoECategoriaDto _selectedTipo) {
+    selectedTipo = _selectedTipo;
   }
 
   @observable
@@ -31,4 +62,15 @@ abstract class _AddProdutoStoreBase with Store {
       {"id": "b", "descricao": "J"}
     ]
   });
+
+  @action
+  Future<bool> salvar() async {
+    print("descricao: " + descricao);
+    print("valor: " + valor);
+    print("selecionarTipo: " + selectedTipo.descricao);
+    print("selecionarCategoria: " + selectedCategoria.descricao);
+
+    return await addProdutoRepository.addProduto(
+        descricao, valor, selectedTipo.id, selectedCategoria.id);
+  }
 }
